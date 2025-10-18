@@ -1,0 +1,8 @@
+artifact_location: file:///d:/mohamed%20tarek%20%20%20assigment/classification/mlruns/615351422394200609
+creation_time: 1760026101008
+experiment_id: '615351422394200609'
+last_update_time: 1760191871877
+lifecycle_stage: deleted
+name: Loan_Approval_XGBoost
+tags:
+  mlflow.experimentKind: custom_model_development

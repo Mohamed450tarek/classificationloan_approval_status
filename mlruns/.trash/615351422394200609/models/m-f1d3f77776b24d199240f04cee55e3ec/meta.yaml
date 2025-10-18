@@ -1,0 +1,10 @@
+artifact_location: file:///d:/mohamed%20tarek%20%20%20assigment/classification/mlruns/615351422394200609/models/m-f1d3f77776b24d199240f04cee55e3ec/artifacts
+creation_timestamp: 1760026291751
+experiment_id: '615351422394200609'
+last_updated_timestamp: 1760026343793
+model_id: m-f1d3f77776b24d199240f04cee55e3ec
+model_type: null
+name: xgb_model
+source_run_id: 3cb51c67f90c44d588d6bcbc50b717cd
+status: 2
+status_message: null

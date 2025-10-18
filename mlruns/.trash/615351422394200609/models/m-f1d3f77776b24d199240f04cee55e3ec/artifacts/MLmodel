@@ -1,0 +1,22 @@
+artifact_path: file:///d:/mohamed%20tarek%20%20%20assigment/classification/mlruns/615351422394200609/models/m-f1d3f77776b24d199240f04cee55e3ec/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.1
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+mlflow_version: 3.4.0
+model_id: m-f1d3f77776b24d199240f04cee55e3ec
+model_size_bytes: 114990
+model_uuid: m-f1d3f77776b24d199240f04cee55e3ec
+prompts: null
+run_id: 3cb51c67f90c44d588d6bcbc50b717cd
+utc_time_created: '2025-10-09 16:11:31.825040'

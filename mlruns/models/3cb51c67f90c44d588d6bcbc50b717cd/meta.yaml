@@ -1,0 +1,15 @@
+artifact_uri: file:///d:/mohamed%20tarek%20%20%20assigment/classification/mlruns/615351422394200609/3cb51c67f90c44d588d6bcbc50b717cd/artifacts
+deleted_time: 1760191871877
+end_time: null
+entry_point_name: ''
+experiment_id: '615351422394200609'
+lifecycle_stage: deleted
+run_id: 3cb51c67f90c44d588d6bcbc50b717cd
+run_name: nimble-bear-668
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1760026207525
+status: 1
+tags: []
+user_id: pc

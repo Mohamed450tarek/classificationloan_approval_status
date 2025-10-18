@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Loan Approval — Demo UI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1: #28b9fc;
+      --bg2: #6713f8;
+      --card: rgba(255,255,255,0.9);
+      --muted: #6b7280;
+      --accent: #10b981;
+      --danger: #ef4444;
+      --glass: rgba(255,255,255,0.7);
+    }
+    *{box-sizing:border-box;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;}
+    html,body{ height:100%;margin:0;background:linear-gradient(135deg,var(--bg1) 0%, var(--bg2) 100%);display:flex;align-items:center;justify-content:center;padding:28px;  display: flex; align-items: center; justify-content: center; }
+    .card{width:100%; height: 80% ;max-width:980px;background:var(--card);border-radius:16px;box-shadow:0 10px 30px rgba(2,6,23,0.25);overflow:hidden;display:grid;grid-template-columns:1fr 380px;}
+    .panel{padding:28px 30px ; height: 800px;}
+    .side{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); padding:22px; border-left:1px solid rgba(0,0,0,0.04);}
+    h1{margin:0;font-size:20px;letter-spacing:-0.2px;}
+    p.lead{margin:6px 0 18px;color:var(--muted);font-size:13px;}
+    form{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+    label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;}
+    input[type="text"], input[type="number"], select{width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(15,23,42,0.08);background:white;font-size:14px;}
+    .full{grid-column:1 / -1;}
+    .actions{display:flex;gap:10px;align-items:center;margin-top:12px;}
+    button.primary{background:linear-gradient(90deg,var(--bg2),var(--bg1));color:white;padding:10px 14px;border-radius:10px;border:0;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(124,58,237,0.28);}
+    button.ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:9px 12px;border-radius:10px;cursor:pointer;}
+    .result{margin-top:16px;padding:12px;border-radius:10px;background:linear-gradient(90deg, rgba(16,185,129,0.08), rgba(16,185,129,0.03));border:1px solid rgba(16,185,129,0.12);display:flex;align-items:center;gap:12px;}
+    .result.fail{background:linear-gradient(90deg, rgba(239,68,68,0.06), rgba(239,68,68,0.02));border:1px solid rgba(239,68,68,0.12);}
+    .muted-sm{font-size:12px;color:var(--muted);}
+    .api-input{display:flex;gap:8px;align-items:center;margin-bottom:12px;}
+    .api-input input{flex:1;}
+    .credits{font-size:12px;color:var(--muted);margin-top:18px;}
+    .logo{display:flex;align-items:center;gap:10px;}
+    .logo .dot{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#fff 0%, rgba(255,255,255,0.6) 100%);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--bg2);}
+    .side h3{margin:0;font-size:14px;}
+    .meta{margin-top:10px;color:var(--muted);font-size:13px;}
+    .small{font-size:12px;color:var(--muted);}
+    .field-note{font-size:11px;color:var(--muted);margin-top:6px;}
+    .inline{display:flex;gap:8px;align-items:center;}
+    footer{padding:14px 22px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));font-size:12px;color:var(--muted);text-align:center;}
+    @media (max-width:900px){.card{grid-template-columns:1fr;}.side{order:2}}
+  </style>
+</head>
+<body >
+  <div class="card" role="application" aria-labelledby="title" style="height: 97vh; text-align: center;">
+    <div class="panel">
+      <div class="logo" style="margin-bottom:14px">
+        <div class="dot">LA</div>
+        <div>
+          <h1 id="title">Loan Approval — Demo</h1>
+          <div class="muted-sm">Enter applicant data and get instant prediction</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:8px" class="api-input">
+        <label class="muted-sm" style="min-width:70px">API URL</label>
+        <input id="apiUrl" type="text" value="http://127.0.0.1:8000/predict-joblib" />
+        <button id="testBtn" class="ghost" style="padding:8px 10px">Test</button>
+      </div>
+
+      <form id="loanForm" autocomplete="off" novalidate>
+        <div>
+          <label>No of dependents</label>
+          <input name="no_of_dependents" type="number" value="2" min="0" />
+        </div>
+
+        <div>
+          <label>Education</label>
+          <select name="education">
+            <!-- default values include leading space because your model expects them -->
+            <option value=" Graduate"> Graduate</option>
+            <option value=" Not Graduate"> Not Graduate</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Self Employed</label>
+          <select name="self_employed">
+            <option value=" No"> No</option>
+            <option value=" Yes"> Yes</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Income (annum)</label>
+          <input name="income_annum" type="number" value="5400" />
+        </div>
+
+        <div>
+          <label>Loan amount</label>
+          <input name="loan_amount" type="number" value="128" />
+        </div>
+
+        <div>
+          <label>Loan term (months)</label>
+          <input name="loan_term" type="number" value="360" />
+        </div>
+
+        <div>
+          <label>CIBIL score</label>
+          <input name="cibil_score" type="number" value="750" />
+        </div>
+
+        <div>
+          <label>Residential assets value</label>
+          <input name="residential_assets_value" type="number" value="200000" />
+        </div>
+
+        <div>
+          <label>Commercial assets value</label>
+          <input name="commercial_assets_value" type="number" value="50000" />
+        </div>
+
+        <div>
+          <label>Luxury assets value</label>
+          <input name="luxury_assets_value" type="number" value="30000" />
+        </div>
+
+        <div>
+          <label>Bank asset value</label>
+          <input name="bank_asset_value" type="number" value="100000" />
+        </div>
+
+        <div class="full actions">
+          <button id="submitBtn" class="primary" type="submit">Predict</button>
+          <button id="clearBtn" class="ghost" type="button">Reset</button>
+          <div style="margin-left:auto" class="small muted-sm">Model: joblib / local</div>
+        </div>
+
+      </form>
+
+      <div id="out" style="margin-top:14px"></div>
+ 
+    </div>
+
+    <div class="side">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3>Prediction</h3>
+        <div class="small">Realtime</div>
+      </div>
+
+      <div id="resultBox" style="margin-top:12px">
+        <div class="muted-sm">Awaiting input — click <strong>Predict</strong>.</div>
+      </div>
+
+      <div class="meta" style="margin-top:18px">
+        <div><strong>Last response:</strong></div>
+        <pre id="lastResp" style="white-space:pre-wrap;background:transparent;border-radius:8px;padding:8px;margin-top:8px;font-size:13px;color:var(--muted)"></pre>
+      </div>
+
+      <div style="margin-top:18px">
+        <h4 style="margin:0 0 6px 0">Quick checks</h4>
+        <div class="small">• Make sure your FastAPI server is running and endpoint is reachable.</div>
+        <div class="small">• Remove any trailing %0A or newline from URL in the API URL input.</div>
+        <div class="small">• If your model expects different field names, change input names in the source.</div>
+      </div>
+    </div>
+  </div>
+ 
+
+  <script>
+    const form = document.getElementById('loanForm');
+    const out = document.getElementById('out');
+    const resultBox = document.getElementById('resultBox');
+    const lastResp = document.getElementById('lastResp');
+    const apiUrlInput = document.getElementById('apiUrl');
+    const testBtn = document.getElementById('testBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    function showLoading(on=true){
+      submitBtn.disabled = on;
+      submitBtn.textContent = on ? 'Predicting...' : 'Predict';
+    }
+
+    testBtn.addEventListener('click', async () => {
+      const url = apiUrlInput.value.trim();
+      try {
+        const r = await fetch(url, {method:'OPTIONS'});
+        resultBox.innerHTML = '<div class="muted-sm">Endpoint reachable (OPTIONS returned)</div>';
+      } catch(e){
+        resultBox.innerHTML = '<div class="muted-sm" style="color:#b91c1c">Endpoint not reachable — check URL and server</div>';
+        console.error(e);
+      }
+    });
+
+    clearBtn.addEventListener('click', () => {
+      form.reset();
+      // restore defaults
+      form.no_of_dependents.value = 2;
+      form.education.value = ' Graduate';
+      form.self_employed.value = ' No';
+      form.income_annum.value = 5400;
+      form.loan_amount.value = 128;
+      form.loan_term.value = 360;
+      form.cibil_score.value = 750;
+      form.residential_assets_value.value = 200000;
+      form.commercial_assets_value.value = 50000;
+      form.luxury_assets_value.value = 30000;
+      form.bank_asset_value.value = 100000;
+      resultBox.innerHTML = '<div class="muted-sm">Form reset.</div>';
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      showLoading(true);
+      resultBox.innerHTML = '';
+      lastResp.textContent = '';
+
+      // build payload
+      const data = {
+        no_of_dependents: Number(form.no_of_dependents.value),
+        education: form.education.value,
+        self_employed: form.self_employed.value,
+        income_annum: Number(form.income_annum.value),
+        loan_amount: Number(form.loan_amount.value),
+        loan_term: Number(form.loan_term.value),
+        cibil_score: Number(form.cibil_score.value),
+        residential_assets_value: Number(form.residential_assets_value.value),
+        commercial_assets_value: Number(form.commercial_assets_value.value),
+        luxury_assets_value: Number(form.luxury_assets_value.value),
+        bank_asset_value: Number(form.bank_asset_value.value),
+      };
+
+      const API_URL = apiUrlInput.value.trim();
+
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        });
+
+        const text = await res.text();
+        let json;
+        try { json = JSON.parse(text); } catch(e){ json = { raw: text } }
+
+        lastResp.textContent = JSON.stringify(json, null, 2);
+
+        if (!res.ok) {
+          resultBox.innerHTML = `<div class="result fail"><strong class="muted-sm">Error</strong><div style="margin-left:8px" class="muted-sm">${(json.detail && json.detail[0] && json.detail[0].msg) || json.raw || 'Server error'}</div></div>`;
+          showLoading(false);
+          return;
+        }
+
+        // support different shapes {status}, {prediction}, {prediction:..., probability:...}
+        const status = json.status ?? json.prediction ?? json.result ?? json.state ?? (json.pred === 1 ? 'Approved' : (json.pred === 0 ? 'Rejected' : undefined));
+        const prob = json.probability ?? json.confidence ?? json.score ?? null;
+
+        if (status === undefined) {
+          resultBox.innerHTML = `<div class="result fail"><strong class="muted-sm">No prediction returned</strong></div>`;
+        } else {
+          const cls = (String(status).toLowerCase().includes('approved') || status === 1) ? '' : 'fail';
+          resultBox.innerHTML = `<div class="result ${cls}"><div><strong>${typeof status === 'number' ? (status === 1 ? 'Approved' : 'Rejected') : status}</strong>${prob ? (' — ' + (Math.round(Number(prob)*10000)/100) + '%') : ''}</div></div>`;
+        }
+
+      } catch (err) {
+        console.error(err);
+        resultBox.innerHTML = `<div class="result fail"><strong class="muted-sm">Network or server error</strong><div class="muted-sm" style="margin-top:6px">${err.message}</div></div>`;
+        lastResp.textContent = String(err);
+      } finally {
+        showLoading(false);
+      }
+    });
+  </script>
+</body>
+</html>

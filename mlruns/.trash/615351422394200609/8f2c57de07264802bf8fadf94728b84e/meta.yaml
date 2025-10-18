@@ -1,0 +1,15 @@
+artifact_uri: file:///d:/mohamed%20tarek%20%20%20assigment/classification/mlruns/615351422394200609/8f2c57de07264802bf8fadf94728b84e/artifacts
+deleted_time: 1760191871877
+end_time: 1760026103359
+entry_point_name: ''
+experiment_id: '615351422394200609'
+lifecycle_stage: deleted
+run_id: 8f2c57de07264802bf8fadf94728b84e
+run_name: grandiose-gnu-735
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1760026103112
+status: 3
+tags: []
+user_id: pc
